@@ -70,7 +70,7 @@ function jsonConverter(data, renderMD, highlight, searchTerm) {
 			<div class="content">
 				<div class="field">
 					<span><a href="https://reddit.com/r/${obj.subreddit}">/r/${obj.subreddit}</a></span> ● 
-					<span><a href="reddit.com/user/${obj.author}">/u/${obj.author}</a></span>
+					<span><a href="https://reddit.com/user/${obj.author}">/u/${obj.author}</a></span>
 					<span class="is-pulled-right">${timestamp}</span>
 				</div>
 			`
