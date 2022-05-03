@@ -12,7 +12,7 @@ function fetchMore(before) {
 	getFromPS(form, before)
 }
 
-function jsonConverter(data, renderMD, highlight, searchTerm) {
+function jsonConverter(data, renderMD) {
 	count = 0
 	html = ""
 	before = 2147483647
@@ -48,24 +48,6 @@ function jsonConverter(data, renderMD, highlight, searchTerm) {
 				markUp = text
 				markUp = markUp.replaceAll("\n","<br>")
 		}
-		if (highlight.checked && searchTerm.length > 0) {
-			var instance = new Mark(document.querySelector(".markdown"));
-			if (!searchTerm.startsWith('"')) {
-				searchArray = searchTerm.split(" ");
-				instance.mark(searchArray, {
-					"wildcards": "enabled",
-					"accuracy": "complementary"
-				});
-			} else {
-				term = searchTerm.replaceAll('"',"")
-				instance.mark(term, {
-					"accuracy": "exactly",
-					"separateWordSearch": false
-				});
-			}
-		}
-			
-
 			html += `
 	<div class="card">
 		<div class="card-content">
@@ -82,7 +64,7 @@ function jsonConverter(data, renderMD, highlight, searchTerm) {
 					<img src=${thumbnail} style="height:100px;width:100px;margin-right:5px"></img>
 					<div>
 						<a href="${link}" class="reddit-title">${title}</a>
-						<div>${markUp}</div>
+						<div class="markdown">${markUp}</div>
 					</div>
 				</div>
 			</div>
@@ -158,8 +140,28 @@ function getFromPS(form, before=-1){
 	}
 	history.pushState(Date.now(), "Chearch - Results", path)
 	load(psURL).then(value => {
-		html = jsonConverter(value.data, form.elements['renderMD'], form.elements['highlight'],form.elements['query'].value, psURL)
+		html = jsonConverter(value.data, form.elements['renderMD'], form.elements['highlight'])
 		document.getElementById("results").innerHTML += html;
+
+		searchTerm = form.elements['query'].value
+		if (highlight.checked && searchTerm.length > 0) {
+			var instance = new Mark(document.querySelector(".markdown"));
+			if (!searchTerm.startsWith('"')) {
+				searchArray = searchTerm.split(" ");
+				instance.mark(searchArray, {
+					"wildcards": "enabled",
+					"accuracy": "complementary"
+				});
+			} else {
+				term = searchTerm.replaceAll('"',"")
+				instance.mark(term, {
+					"accuracy": "exactly",
+					"separateWordSearch": false
+				});
+			}
+		}
+
+
 		document.getElementById("apiInfo").innerHTML = Object.keys(value.data).length + ` Results - <a href='${psURL}'>Generated API URL</a>`
 		button.value = "Search"
 		try { document.getElementById("fetch-"+before).remove() }
