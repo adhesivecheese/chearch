@@ -41,7 +41,7 @@ function jsonConverter(data, renderMD, highlight, searchTerm) {
 				markUp = text
 				markUp = markUp.replaceAll("\n","<br>")
 		}
-		if (highlight.checked) {
+		if (highlight.checked && searchTerm.length > 0) {
 			if (!searchTerm.startsWith('"')) {
 				searchArray = searchTerm.split(" ");
 				
