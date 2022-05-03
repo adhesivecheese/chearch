@@ -9,10 +9,16 @@ async function load(url) {
 	return obj
 }
 
+function fetchMore(before) {
+	getFromPS(form, before)
+}
+
 function jsonConverter(data, renderMD, highlight, searchTerm) {
 	html = ""
+	before = 2147483647
 	data.forEach(obj => {
 		display = true
+		before = obj.created_utc
 		timestamp = new Date(obj.created_utc * 1000)
 		timestamp = timestamp.toString().split(" (")[0]
 		thumbnail = ""
@@ -54,6 +60,8 @@ function jsonConverter(data, renderMD, highlight, searchTerm) {
 				term = searchTerm.replaceAll('"',"")
 				markUp = markUp.replaceAll(term,`<mark>${term}</mark>`)
 			}
+		}
+			
 
 			html += `
 	<div class="card">
@@ -89,16 +97,12 @@ function jsonConverter(data, renderMD, highlight, searchTerm) {
 	</div>
 			`
 			}
-		}
 	});
+	html += `<input type="submit" class="button is-danger is-fullwidth" value="Fetch More" onclick="fetchMore(${before})">`
 	return html
 }
 
-const form = document.getElementById('searchForm');
-form.addEventListener('submit', (event) => {
-	// stop form submission
-	event.preventDefault();
-
+function getFromPS(form, before=-1){
 	if (form.elements['searchFor'].value == "submission") {
 		psURL = "https://api.pushshift.io/reddit/submission/search?html_decode=True"
 	} else {
@@ -117,9 +121,11 @@ form.addEventListener('submit', (event) => {
 		after = new Date(form.elements['after'].value).valueOf() / 1000
 		psURL += "&after=" + after
 	}
-	if (form.elements['before'].value != '') {
-		before = new Date(form.elements['before'].value).valueOf() / 1000
+	if (before != -1) {
 		psURL += "&before=" + before
+	} else if (form.elements['before'].value != '') {
+			before = new Date(form.elements['before'].value).valueOf() / 1000
+			psURL += "&before=" + before
 	}
 	if (form.elements['query'].value != '') {
 
@@ -133,10 +139,18 @@ form.addEventListener('submit', (event) => {
 
 	load(psURL).then(value => {
 
-		html = jsonConverter(value.data, form.elements['renderMD'], form.elements['highlight'],form.elements['query'].value)
-		document.getElementById("results").innerHTML = html;
+		html = jsonConverter(value.data, form.elements['renderMD'], form.elements['highlight'],form.elements['query'].value, psURL)
+		document.getElementById("results").innerHTML += html;
 		document.getElementById("apiInfo").innerHTML = Object.keys(value.data).length + ` Results - <a href='${psURL}'>Generated API URL</a>`
 	})
+}
+
+const form = document.getElementById('searchForm');
+form.addEventListener('submit', (event) => {
+	// stop form submission
+	event.preventDefault();
+	getFromPS(form)
+
 
 
 });
