@@ -49,17 +49,19 @@ function jsonConverter(data, renderMD, highlight, searchTerm) {
 				markUp = markUp.replaceAll("\n","<br>")
 		}
 		if (highlight.checked && searchTerm.length > 0) {
+			var instance = new Mark(document.querySelector(".markdown"));
 			if (!searchTerm.startsWith('"')) {
 				searchArray = searchTerm.split(" ");
-				
-				searchArray.forEach(element => {
-					var regex = new RegExp('\\b' + element + '\\b', "gi");
-					markUp = markUp.replaceAll(regex,`<mark>${element}</mark>`)
-			
+				instance.mark(searchArray, {
+					"wildcards": "enabled",
+					"accuracy": "complementary"
 				});
 			} else {
 				term = searchTerm.replaceAll('"',"")
-				markUp = markUp.replaceAll(term,`<mark>${term}</mark>`)
+				instance.mark(term, {
+					"accuracy": "exactly",
+					"separateWordSearch": false
+				});
 			}
 		}
 			
