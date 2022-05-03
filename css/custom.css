@@ -1,0 +1,85 @@
+.text-red-300 {
+    --text-opacity: 1;
+    color: #feb2b2;
+    color: rgba(254, 178, 178, var(--text-opacity));
+}
+
+.text-center {
+    text-align: center;
+}
+
+.bg-dark {
+    --bg-opacity: 1;
+    background-color: #121212;
+    background-color: rgba(18, 18, 18, var(--bg-opacity));
+}
+
+.label {
+    --text-opacity: 1;
+    color: #f7fafc;
+    color: rgba(247, 250, 252, var(--text-opacity));
+    text-transform: uppercase;
+    font-size: .75rem;
+    font-weight: 700;
+}
+
+body {
+    min-height: 100vh;
+}
+
+.control {
+    margin-left: 0.25rem;
+}
+
+.hover\:bg-red-800:hover {
+    --bg-opacity: 1;
+    background-color: #9b2c2c;
+    background-color: rgba(155, 44, 44, var(--bg-opacity));
+}
+
+.bg-red-900 {
+    --bg-opacity: 1;
+    background-color: #742a2a;
+    background-color: rgba(116, 42, 42, var(--bg-opacity));
+}
+
+.section {
+    max-width:900px;
+    margin: auto;
+}
+
+.card {
+    --bg-opacity: 1;
+    background-color: #1a202c;
+    background-color: rgba(26, 32, 44, var(--bg-opacity));
+    margin-top: 5px;
+
+}
+
+.card p, .card strong, .card .field, ::marker, .card h1, .card h2, .card h3, .card li, #apiInfo {
+    --text-opacity: 1;
+    color: #f7fafc;
+    color: rgba(247, 250, 252, var(--text-opacity));
+}
+
+.card span, .card a {
+    --text-opacity: 1;
+    color: #f56565;
+    color: rgba(245, 101, 101, var(--text-opacity));
+}
+
+.card-content {
+    padding: 0.5rem;
+}
+
+.card .reddit-title {
+    --text-opacity: 1;
+    color: #f7fafc;
+    color: rgba(247, 250, 252, var(--text-opacity));
+    font-weight: bold;
+}
+
+.flex{ display: flex}
+.content blockquote {
+    background-color: unset;
+}

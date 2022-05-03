@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello Bulma!</title>
+    <link rel="stylesheet" href="css/bulma.min.css">
+	<link rel="stylesheet" href="css/custom.css">
+  </head>
+  <body class="bg-dark text-gray-100">
+  <section class="section">
+    <div class="container">
+      <h1 class="title text-red-300 text-center">
+        Reddit Search
+      </h1>
+
+	  <form class="form-horizontal" action="#" id="searchForm">
+		<fieldset>
+		
+<div class="field is-horizontal">
+	<div class="field-body">
+		<!-- Text input-->
+		<div class="field">
+		  <label class="label text-xs uppercase font-bold text-gray-100" for="author">Username</label>
+		  <div class="control">
+			<input id="author" name="author" type="text" placeholder="e.g. adhesiveCheese" class="input ">
+		  </div>
+		</div>
+	</div>
+	<div class="field-body">
+		<!-- Text input-->
+		<div class="field">
+		  <label class="label text-xs uppercase font-bold text-gray-100" for="subreddit">Subreddit</label>
+		  <div class="control">
+			<input id="subreddit" name="subreddit" type="text" placeholder="e.g. DirtyPenPals" class="input ">
+		  </div>
+		</div>
+	</div>
+		
+</div>
+
+<div class="field is-horizontal">
+	<div class="field-body">
+		<!-- Select Basic -->
+		<div class="field">
+		  <label class="label" for="searchFor">Search For</label>
+		  <div class="control is-expanded">
+			  <div class="select is-fullwidth">
+				<select id="searchFor" name="searchFor" class="">
+				  <option value="submission">Posts</option>
+				  <option value="comment">Comments</option>
+				</select>
+			</div>
+		  </div>
+		</div>
+	</div>
+
+	<div class="field-body">
+		<!-- Text input-->
+		<div class="field">
+		  <label class="label" for="resultSize">Num. Returned</label>
+		  <div class="control">
+			<input id="resultSize" name="resultSize" type="text" placeholder="100" class="input ">
+		  </div>
+		</div>
+	</div>
+
+	<div class="field-body">
+		<!-- Text input-->
+		<div class="field">
+		  <label class="label" for="score">Score Filter</label>
+		  <div class="control">
+			<input id="score" name="score" type="text" placeholder="e.g. >10, <100 > 100,<900" class="input ">
+		  </div>
+		</div>
+	</div>
+
+
+</div>
+
+<div class="field is-horizontal">
+	<div class="field-body">
+		<!-- Text input-->
+		<div class="field">
+		  <label class="label" for="after">After</label>
+		  <div class="control">
+			<input id="after" name="after" type="datetime-local" class="input ">
+		  </div>
+		</div>
+	</div>
+
+	<div class="field-body">
+		<!-- Text input-->
+		<div class="field">
+			<label class="label" for="before">Before</label>
+			<div class="control">
+			  <input id="before" name="before" type="datetime-local" class="input ">
+			</div>
+		  </div>
+	</div>
+		
+</div>
+<div class="field is-horizontal">
+	<div class="field-body">
+		<!-- Search input-->
+		<div class="field">
+		  <label class="label" for="query">Search Input</label>
+		  <div class="control">
+			<input id="query" name="query" type="text" placeholder="search text" class="input is-rounded search-query">
+		  </div>
+		</div>
+	</div>
+
+</div>
+
+<div class="field is-horizontal">
+	<div class="field-body">
+		<!-- Button -->
+		<div class="field">
+		  <div class="control is-expanded">
+			<!--<button id="search" name="search" class="button is-danger is-fullwidth">Search</button>-->
+			<input type="submit" class="button is-danger is-fullwidth" value="Submit">
+		  </div>
+		</div>
+	</div>
+</div>
+		</fieldset>
+		</form>
+
+
+
+
+<div id="apiInfo" class="has-text-centered"></div>
+<div id="results"><br><p class="has-text-centered">🎵Take 'em to chearch🎵</p></div>
+
+</div>
+  </section>
+
+  <script src="js/snuownd.js"></script>
+  <script src="js/custom.js"></script>
+  </body>
+</html>
