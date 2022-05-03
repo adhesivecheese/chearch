@@ -21,6 +21,7 @@
     text-transform: uppercase;
     font-size: .75rem;
     font-weight: 700;
+    margin-left: 5px;
 }
 
 body {
@@ -82,4 +83,11 @@ body {
 .flex{ display: flex}
 .content blockquote {
     background-color: unset;
+}
+.field:not(:last-child) {
+    margin-bottom: 5px;
+}
+
+.field .button {
+    margin-top: 10px;
 }
