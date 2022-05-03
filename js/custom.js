@@ -145,7 +145,7 @@ function getFromPS(form, before=-1){
 
 		searchTerm = form.elements['query'].value
 		if (highlight.checked && searchTerm.length > 0) {
-			var instance = new Mark(document.querySelector(".markdown"));
+			var instance = new Mark(document.querySelector("#results"));
 			if (!searchTerm.startsWith('"')) {
 				searchArray = searchTerm.split(" ");
 				instance.mark(searchArray, {
