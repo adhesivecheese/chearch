@@ -1,3 +1,27 @@
+document.addEventListener('DOMContentLoaded', function() {
+    loadParams()
+}, false);
+
+function loadParams() {
+	const urlParams = new URLSearchParams(window.location.search).entries();
+	for(const param of urlParams) {
+		console.log(param[0], param[1])
+		try{
+			if (param[0] == "before" || param[0] == "after") {
+				value = new Date(param[1]*1000)
+				offset = new Date().getTimezoneOffset()*60000
+				value = new Date(value - offset).toISOString().slice(0,-1)
+			} else {
+				value = param[1]
+			}
+			document.getElementById(param[0]).value = value
+		}
+		catch {
+			console.log("something went wrong")
+		}
+	}
+}
+
 async function load(url) {
 	let obj = null;
 	try {
@@ -96,7 +120,7 @@ function getFromPS(form, before=-1){
 		moreButton.value = "Fetching..."
 	}
 	path = "?"
-	if (form.elements['searchFor'].value == "submission") {
+	if (form.elements['kind'].value == "submission") {
 		psURL = "https://api.pushshift.io/reddit/submission/search?html_decode=True"
 		path += "kind=submission"
 	} else {
@@ -127,45 +151,51 @@ function getFromPS(form, before=-1){
 			psURL += "&before=" + before
 			path += "&before=" + before
 	}
-	if (form.elements['query'].value != '') {
-		psURL += "&q=" + encodeURIComponent(form.elements['query'].value)
-		path  += "&q=" + encodeURIComponent(form.elements['query'].value)
+	if (form.elements['q'].value != '') {
+		psURL += "&q=" + encodeURIComponent(form.elements['q'].value)
+		path  += "&q=" + encodeURIComponent(form.elements['q'].value)
 	}
-	if (form.elements['resultSize'].value == '') {
+	if (form.elements['size'].value == '') {
 		psURL += "&size=100"
 		path  += "&size=100"
 	} else {
-		psURL += "&size=" + form.elements['resultSize'].value;
-		path  += "&size=" + form.elements['resultSize'].value;
+		psURL += "&size=" + form.elements['size'].value;
+		path  += "&size=" + form.elements['size'].value;
 	}
 	history.pushState(Date.now(), "Chearch - Results", path)
 	load(psURL).then(value => {
-		html = jsonConverter(value.data, form.elements['renderMD'], form.elements['highlight'])
-		document.getElementById("results").innerHTML += html;
+		try {
+			html = jsonConverter(value.data, form.elements['renderMD'], form.elements['highlight'])
+			document.getElementById("results").innerHTML += html;
 
-		searchTerm = form.elements['query'].value
-		if (highlight.checked && searchTerm.length > 0) {
-			var instance = new Mark(document.querySelector("#results"));
-			if (!searchTerm.startsWith('"')) {
-				searchArray = searchTerm.split(" ");
-				instance.mark(searchArray, {
-					"wildcards": "enabled",
-					"accuracy": "complementary"
-				});
-			} else {
-				term = searchTerm.replaceAll('"',"")
-				instance.mark(term, {
-					"accuracy": "exactly",
-					"separateWordSearch": false
-				});
+			searchTerm = form.elements['q'].value
+			if (highlight.checked && searchTerm.length > 0) {
+				var instance = new Mark(document.querySelector("#results"));
+				if (!searchTerm.startsWith('"')) {
+					searchArray = searchTerm.split(" ");
+					instance.mark(searchArray, {
+						"wildcards": "enabled",
+						"accuracy": "complementary"
+					});
+				} else {
+					term = searchTerm.replaceAll('"',"")
+					instance.mark(term, {
+						"accuracy": "exactly",
+						"separateWordSearch": false
+					});
+				}
 			}
+
+
+			document.getElementById("apiInfo").innerHTML = Object.keys(value.data).length + ` Results - <a href='${psURL}'>Generated API URL</a>`
+			button.value = "Search"
+			try { document.getElementById("fetch-"+before).remove() }
+			catch {}
 		}
-
-
-		document.getElementById("apiInfo").innerHTML = Object.keys(value.data).length + ` Results - <a href='${psURL}'>Generated API URL</a>`
-		button.value = "Search"
-		try { document.getElementById("fetch-"+before).remove() }
-		catch {}
+		catch {
+			document.getElementById("apiInfo").innerHTML = `Search error. Pushshift may be down - <a href='${psURL}'>Generated API URL</a>`
+			button.value = "Search"
+		}
 	})
 }
 
