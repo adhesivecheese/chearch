@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function() {
 function loadParams() {
 	const urlParams = new URLSearchParams(window.location.search).entries();
 	for(const param of urlParams) {
-		console.log(param[0], param[1])
 		try{
 			if (param[0] == "before" || param[0] == "after") {
 				value = new Date(param[1]*1000)
