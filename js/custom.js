@@ -36,7 +36,7 @@ function fetchMore(before) {
 	getFromPS(form, before)
 }
 
-function jsonConverter(data, renderMD) {
+function jsonConverter(data, renderMD, showthumbnails) {
 	count = 0
 	html = ""
 	before = 2147483647
@@ -51,8 +51,10 @@ function jsonConverter(data, renderMD) {
 			text = obj.url
 			link = obj.full_link
 			title = obj.title
-			if (obj.thumbnail != '' || obj.thumbnail != "nsfw") {
-				thumbnail = obj.thumbnail
+			if (showthumbnails.checked) {
+				if (obj.thumbnail != '' || obj.thumbnail != "nsfw") {
+					thumbnail = obj.thumbnail
+				}
 			}
 		} else {
 			if ("body" in obj) {
@@ -165,7 +167,7 @@ function getFromPS(form, before=-1){
 	history.pushState(Date.now(), "Chearch - Results", path)
 	load(psURL).then(value => {
 		try {
-			html = jsonConverter(value.data, form.elements['renderMD'], form.elements['highlight'])
+			html = jsonConverter(value.data, form.elements['renderMD'], form.elements['thumbnails'])
 			document.getElementById("results").innerHTML += html;
 
 			searchTerm = form.elements['q'].value
