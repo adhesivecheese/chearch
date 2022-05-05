@@ -181,7 +181,7 @@ function getFromPS(form, before=-1){
 				} else {
 					term = searchTerm.replaceAll('"',"")
 					instance.mark(term, {
-						"accuracy": "exactly",
+						"accuracy": "partially",
 						"separateWordSearch": false
 					});
 				}
