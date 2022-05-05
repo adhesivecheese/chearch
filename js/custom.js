@@ -192,6 +192,20 @@ function getFromPS(form, before=-1){
 			button.value = "Search"
 			try { document.getElementById("fetch-"+before).remove() }
 			catch {}
+
+			var list = document.querySelectorAll(".markdown a");
+			for (let item of list) {
+					link = item.href;
+					if (link.endsWith(".jpg") || link.endsWith(".png") || link.endsWith(".gif")) {
+							var node = document.createElement("button");
+							node.setAttribute("onclick", "directExpand('" + link + "')")
+							node.classList.add("button","is-danger","is-small")
+							var textnode = document.createTextNode("+");
+							node.appendChild(textnode);
+							item.after(node);
+					}
+			}
+
 		}
 		catch {
 			document.getElementById("apiInfo").innerHTML = `Search error. Pushshift may be down - <a href='${psURL}'>Generated API URL</a>`
@@ -199,6 +213,31 @@ function getFromPS(form, before=-1){
 		}
 	})
 }
+
+function directExpand(link) {
+	var img = document.createElement('img');
+	img.src = link;
+	els = document.querySelector("a[href='" + link + "']");
+	els = els.nextElementSibling;
+	els.innerHTML = '-'
+	if (!els.nextElementSibling || els.nextElementSibling.id != link) {
+	  node = document.createElement("div")
+	  node.id = link;
+	  els.after(node)
+	}
+	iels = els.nextElementSibling;
+	if (!iels.hasChildNodes()) {
+	  iels.appendChild(img);
+	} else {
+	  if (iels.style.display == 'none') {
+		els.innerHTML = '-';
+		iels.style.display = 'block'
+	  } else {
+		els.innerHTML = '+';
+		iels.style.display = 'none';
+	  }
+	}
+  }
 
 const form = document.getElementById('searchForm');
 form.addEventListener('submit', (event) => {
