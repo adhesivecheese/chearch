@@ -71,6 +71,8 @@ body {
 .content blockquote {
 	background-color: unset;
 }
+.field { overflow: hidden; }
+
 .field:not(:last-child) {
 	margin-bottom: 5px;
 }
