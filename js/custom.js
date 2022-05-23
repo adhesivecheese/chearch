@@ -51,7 +51,7 @@ function jsonConverter(data, renderMD, showthumbnails) {
 			link = obj.full_link
 			title = obj.title
 			if (showthumbnails.checked) {
-				if (obj.thumbnail != '' || obj.thumbnail != "nsfw") {
+				if (obj.thumbnail.endsWith(".jpg")) {
 					thumbnail = obj.thumbnail
 				}
 			}
