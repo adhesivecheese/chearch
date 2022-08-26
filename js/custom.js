@@ -61,7 +61,7 @@ function jsonConverter(data, renderMD, showthumbnails) {
 				if (obj.permalink) {
 					link = "https://reddit.com" + obj.permalink
 				} else {
-					link = `https://reddit.com/${obj.link_id.replace("t3_","")}/-/${obj.id}`  
+					link = `https://reddit.com//comments/${obj.link_id.replace("t3_","")}/-/${obj.id}`  
 				}
 				title = "comment"
 			} else if ("selftext" in obj) {
