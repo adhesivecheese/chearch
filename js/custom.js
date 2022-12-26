@@ -48,7 +48,7 @@ function jsonConverter(data, renderMD, showthumbnails) {
 		thumbnail = ""
 		if (obj.is_self == false) {
 			text = obj.url
-			link = obj.full_link
+			link = obj.url
 			title = obj.title
 			if (showthumbnails.checked) {
 				if (obj.thumbnail.endsWith(".jpg")) {
@@ -66,7 +66,7 @@ function jsonConverter(data, renderMD, showthumbnails) {
 				title = "comment"
 			} else if ("selftext" in obj) {
 				text = obj.selftext
-				link = obj.full_link
+				link = obj.url
 				title = obj.title
 			}
 		}
