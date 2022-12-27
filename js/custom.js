@@ -48,7 +48,7 @@ function jsonConverter(data, renderMD, showthumbnails) {
 		thumbnail = ""
 		if (obj.is_self == false) {
 			text = obj.url
-			link = obj.url
+			link = "https://reddit.com" + obj.permalink
 			title = obj.title
 			if (showthumbnails.checked) {
 				if (obj.thumbnail.endsWith(".jpg")) {
