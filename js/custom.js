@@ -21,10 +21,10 @@ function loadParams() {
 	}
 }
 
-async function load(url) {
+async function load(url, access_token) {
 	let obj = null;
 	try {
-		obj = await (await fetch(url)).json();
+		obj = await (await fetch(url, { headers: { "Authorization": `Bearer ${access_token}` } })).json();
 	} catch (e) {
 		console.log(e);
 	}
@@ -140,9 +140,14 @@ function getFromPS(form, until=-1){
 		psURL += "&subreddit=" + form.elements['subreddit'].value
 		path  += "&subreddit=" + form.elements['subreddit'].value
 	}
-	if (form.elements['score'].value != '') {
-		psURL += "&score=" + form.elements['score'].value
-		path  += "&score=" + form.elements['score'].value
+
+	if (form.elements['min_score'].value != '') {
+		psURL += "&min_score=" + form.elements['min_score'].value
+		path  += "&min_score=" + form.elements['min_score'].value
+	}
+	if (form.elements['max_score'].value != '') {
+		psURL += "&max_score=" + form.elements['max_score'].value
+		path  += "&max_score=" + form.elements['max_score'].value
 	}
 	if (form.elements['since'].value != '') {
 		since = new Date(form.elements['since'].value).valueOf() / 1000
@@ -168,7 +173,8 @@ function getFromPS(form, until=-1){
 		path  += "&size=" + form.elements['size'].value;
 	}
 	history.pushState(Date.now(), "Chearch - Results", path)
-	load(psURL).then(value => {
+	access_token = form.elements['access_token'].value
+	load(psURL, access_token).then(value => {
 		try {
 			html = jsonConverter(value.data, form.elements['renderMD'], form.elements['thumbnails'])
 			document.getElementById("results").innerHTML += html;
