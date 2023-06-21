@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function clearAccessToken() {
 	if (localStorage.getItem("access_token")) {
 		document.getElementById("access_token").value = localStorage.getItem("access_token");
+		form.elements['access_token'].value = ''
 	}
 }
 
