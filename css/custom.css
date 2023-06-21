@@ -89,3 +89,8 @@ label.checkbox.label {
 	padding: 6px;
 	background-color: #f56565;
 }
+
+.clearButton {
+    margin-top: 0 !important;
+    margin-left: 0;
+}
