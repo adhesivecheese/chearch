@@ -129,10 +129,18 @@
 						<div class="field is-horizontal">
 							<div class="field-body">
 								<div class="field">
-									<label class="label text-xs uppercase font-bold text-gray-100" for="access_token">Access Token</label>
-									<div class="control">
-										<input id="access_token" name="access_token" type="text" class="input " placeholder="This field is required" required>
+									<label class="label text-xs uppercase font-bold text-gray-100">Access Token</label>
+									<div class="field has-addons">
+										<p class="control is-expanded">
+											<input id="access_token" name="access_token" type="text" class="input " placeholder="This field is required" required="">
+										</p>
+										<p class="control clearButton" title="clear access token">
+											<a class="button clearButton" onclick="clearAccessToken()">
+												Clear
+											</a>
+										</p>
 									</div>
+									<p></p>
 								</div>
 							</div>
 							<div class="field-body">
