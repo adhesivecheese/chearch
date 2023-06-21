@@ -2,6 +2,12 @@ document.addEventListener('DOMContentLoaded', function() {
     loadParams()
 }, false);
 
+function clearAccessToken() {
+	if (localStorage.getItem("access_token")) {
+		document.getElementById("access_token").value = localStorage.getItem("access_token");
+	}
+}
+
 function loadParams() {
 	const urlParams = new URLSearchParams(window.location.search).entries();
 	for(const param of urlParams) {
@@ -19,6 +25,7 @@ function loadParams() {
 			console.log("something went wrong")
 		}
 	}
+	clearAccessToken()
 }
 
 async function load(url, access_token) {
@@ -130,7 +137,7 @@ function getFromPS(form, until=-1){
 		path += "kind=submission"
 	} else {
 		psURL = "https://api.pushshift.io/reddit/comment/search?html_decode=True"
-		path += "kind=submission"
+		path += "kind=comment"
 	}
 	if (form.elements['author'].value != '') {
 		psURL += "&author=" + form.elements['author'].value
@@ -174,6 +181,7 @@ function getFromPS(form, until=-1){
 	}
 	history.pushState(Date.now(), "Chearch - Results", path)
 	access_token = form.elements['access_token'].value
+	localStorage.setItem("access_token", access_token);
 	load(psURL, access_token).then(value => {
 		try {
 			html = jsonConverter(value.data, form.elements['renderMD'], form.elements['thumbnails'])
@@ -218,8 +226,13 @@ function getFromPS(form, until=-1){
 
 		}
 		catch {
-			document.getElementById("apiInfo").innerHTML = `Search error. Pushshift may be down - <a href='${psURL}'>Generated API URL</a>`
-			button.value = "Search"
+			if (value.detail == "Invalid token or expired token.") {
+				clearAccessToken()
+				document.getElementById("apiInfo").innerHTML = `Invalid or expired token - <a href="https://api.pushshift.io/login?redirect=search-tool">Request new token</a> - <a href='${psURL}'>Generated API URL</a>`;
+			} else {
+	 			document.getElementById("apiInfo").innerHTML = `Search error. Pushshift may be down - <a href='${psURL}'>Generated API URL</a>`;
+			}
+			button.value = "Search";
 		}
 	})
 }
