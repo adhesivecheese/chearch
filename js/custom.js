@@ -2,9 +2,15 @@ document.addEventListener('DOMContentLoaded', function() {
     loadParams()
 }, false);
 
-function clearAccessToken() {
+function getAccessToken() {
 	if (localStorage.getItem("access_token")) {
 		document.getElementById("access_token").value = localStorage.getItem("access_token");
+	}
+}
+
+function clearAccessToken() {
+	if (localStorage.getItem("access_token")) {
+		localStorage.removeItem("access_token");
 		form.elements['access_token'].value = ''
 	}
 }
@@ -26,9 +32,7 @@ function loadParams() {
 			console.log("something went wrong")
 		}
 	}
-	if (localStorage.getItem("token")) {
-		document.getElementById("token").value = localStorage.getItem("token");
-	}
+	getAccessToken()
 }
 
 async function load(url, access_token) {
