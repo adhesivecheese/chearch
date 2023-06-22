@@ -26,7 +26,9 @@ function loadParams() {
 			console.log("something went wrong")
 		}
 	}
-	clearAccessToken()
+	if (localStorage.getItem("token")) {
+		document.getElementById("token").value = localStorage.getItem("token");
+	}
 }
 
 async function load(url, access_token) {
